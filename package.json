@@ -1,0 +1,22 @@
+{
+  "name": "coffee-contract",
+  "version": "0.1.0",
+  "description": "Write contract without macro",
+  "main": "index.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomoasleep/coffee-contract.git"
+  },
+  "author": "Tomoya Chiba <tomo.asleep@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tomoasleep/coffee-contract/issues"
+  },
+  "homepage": "https://github.com/tomoasleep/coffee-contract#readme",
+  "dependencies": {
+    "expect.js": "^0.3.1"
+  }
+}
