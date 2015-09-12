@@ -1,6 +1,7 @@
 # coffee-contract
 
-coffee-contract make it easy to write contracts without using macros.
+coffee-contract makes it easy to write [contracts](https://en.wikipedia.org/wiki/Design_by_contract) without using macros.
+This library provides function wrappers to check their preconditions and postconditions.
 
 ```coffee
 C = require 'coffee-contract'
