@@ -1,11 +1,32 @@
-expect = require 'expect.js'
+inspect = require 'object-inspect'
 
-matchernize = (name) ->
-  (matcherArgs...) ->
-    (actual) ->
-      expect(actual).to[name](matcherArgs...)
+class ContractError
+  @fail: (message) ->
+    throw new Error(message)
 
-module.exports =
+class Matchers
+  kindof: (kind) -> (actual) ->
+    if typeof kind is 'string'
+      unless typeof actual is kind
+        ContractError.fail "The type of #{inspect(actual)} is not #{inspect(kind)}."
+    else
+      unless actual instanceof kind
+        ContractError.fail "The type of #{inspect(actual)} is not #{inspect(kind)}."
+
+  a: @::kindof
+  an: @::kindof
+
+  key: (keys...) -> (actual) ->
+    for key in keys
+      unless actual[key]?
+        ContractError.fail "#{inspect(actual)} does not has '#{inspect(key)}' key."
+
+  keys: @::key
+
+  equal: (expect) -> (actual) ->
+    if expect isnt actual
+      ContractError.fail "#{inspect(actual)} does not equal #{inspect(expect)}."
+
   has: (matcherDict) -> (actual) ->
     for key, value of matcherDict
       value(actual[key])
@@ -14,6 +35,9 @@ module.exports =
     for v, i in actual
       matchers[i](v)
 
-names = ['a', 'an', 'contain', 'key', 'keys', 'within', 'above', 'below', 'equal', 'match']
-for name in names
-  module.exports[name] = matchernize(name)
+module.exports = do ->
+  obj = {}
+  matchers = new Matchers
+  for key, value of matchers
+    obj[key] = value
+  obj
