@@ -1,7 +1,7 @@
 { all } = require './matchers'
 
 class Contract
-  constructor: (@parent, @beforeCheckers = [], @afterCheckers = []) ->
+  constructor: (@beforeCheckers = [], @afterCheckers = []) ->
 
   disable: ->
     constructor.enabled = false
@@ -30,7 +30,7 @@ class Contract
         func.apply(this, args)
 
   _spawn: (beforeCheckers, afterCheckers) ->
-    new @constructor((@root ? this), beforeCheckers, afterCheckers)
+    new @constructor(beforeCheckers, afterCheckers)
 
   _checkBefore: (callee, args) ->
     for checker in @beforeCheckers
