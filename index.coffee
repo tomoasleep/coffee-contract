@@ -1,14 +1,16 @@
 { all } = require './matchers'
 
 class Contract
-  constructor: (@root, @beforeCheckers = [], @afterCheckers = []) ->
-    @enabled = true
+  constructor: (@parent, @beforeCheckers = [], @afterCheckers = []) ->
 
   disable: ->
-    @enabled = false
+    constructor.enabled = false
+
+  enable: ->
+    constructor.enabled = true
 
   isEnabled: ->
-    (if @root then @root.isEnabled() else true) && @enabled
+    constructor.enabled
 
   before: (checker) -> @_spawn([@beforeCheckers..., checker], @afterCheckers)
   after: (checker) -> @_spawn(@beforeCheckers, [@afterCheckers..., checker])
@@ -39,3 +41,4 @@ class Contract
       throw new Error() if checker.call(callee, args, rtn) is false
 
 module.exports = new Contract
+module.exports.enable()
