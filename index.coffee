@@ -18,7 +18,7 @@ class Contract
   args: (matchers...) -> @before((givenArgs) -> all(matchers)(givenArgs) )
   rtn: (matcher) -> @after((_args, rtn) -> matcher(rtn))
 
-  wrap: (func) ->
+  wrap: (func) =>
     self = this
     (args...) ->
       if self.isEnabled()
